@@ -94,8 +94,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: msg.content
       }));
 
-      // Generate AI response
-      const aiResponse = await generateEmpathiChatResponse(message, history);
+      // Get user context for personalized responses
+      const recentMoodEntries = await storage.getUserMoodEntries(userId, 7);
+      const recentExercises = await storage.getUserRecentExerciseCompletions(userId, 10);
+      const conversationThemes = await storage.getUserConversationThemes(userId);
+
+      const userContext = {
+        recentMoodEntries: recentMoodEntries.map(entry => ({
+          mood: entry.mood,
+          energy: entry.energy,
+          anxiety: entry.anxiety,
+          timestamp: entry.createdAt.toISOString()
+        })),
+        completedExercises: recentExercises.map(comp => comp.exerciseTitle || 'exercise'),
+        conversationThemes: conversationThemes
+      };
+
+      // Generate AI response with personalized context
+      const aiResponse = await generateEmpathiChatResponse(message, history, userContext);
 
       // Save AI message
       const assistantMessage = await storage.createMessage({

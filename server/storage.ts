@@ -44,6 +44,10 @@ export interface IStorage {
   // Mood operations
   createMoodEntry(entry: InsertMoodEntry): Promise<MoodEntry>;
   getUserMoodEntries(userId: string, limit?: number): Promise<MoodEntry[]>;
+  
+  // Enhanced AI context methods
+  getUserRecentExerciseCompletions(userId: string, limit?: number): Promise<Array<ExerciseCompletion & { exerciseTitle?: string }>>;
+  getUserConversationThemes(userId: string): Promise<string[]>;
 }
 
 export class DatabaseStorage implements IStorage {

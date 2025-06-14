@@ -15,32 +15,69 @@ export interface ChatResponse {
 
 export async function generateEmpathiChatResponse(
   userMessage: string,
-  conversationHistory: { role: "user" | "assistant"; content: string }[] = []
+  conversationHistory: { role: "user" | "assistant"; content: string }[] = [],
+  userContext?: {
+    recentMoodEntries?: Array<{ mood: number; energy: number; anxiety: number; timestamp: string }>;
+    completedExercises?: string[];
+    conversationThemes?: string[];
+  }
 ): Promise<ChatResponse> {
   try {
+    // Build personalized context for more tailored responses
+    let contextPrompt = "";
+    if (userContext) {
+      if (userContext.recentMoodEntries && userContext.recentMoodEntries.length > 0) {
+        const avgMood = userContext.recentMoodEntries.reduce((sum, entry) => sum + entry.mood, 0) / userContext.recentMoodEntries.length;
+        const avgEnergy = userContext.recentMoodEntries.reduce((sum, entry) => sum + entry.energy, 0) / userContext.recentMoodEntries.length;
+        const avgAnxiety = userContext.recentMoodEntries.reduce((sum, entry) => sum + entry.anxiety, 0) / userContext.recentMoodEntries.length;
+        
+        contextPrompt += `\nUser's recent mood patterns (1-10 scale):
+- Average mood: ${avgMood.toFixed(1)} (consider if they've been struggling or improving)
+- Average energy: ${avgEnergy.toFixed(1)} (consider if they need energizing or calming activities)
+- Average anxiety: ${avgAnxiety.toFixed(1)} (adjust support level and coping strategies accordingly)`;
+      }
+      
+      if (userContext.completedExercises && userContext.completedExercises.length > 0) {
+        contextPrompt += `\nRecent exercises completed: ${userContext.completedExercises.join(", ")}
+- Acknowledge their effort and build on what's working
+- Suggest similar or progressive exercises`;
+      }
+      
+      if (userContext.conversationThemes && userContext.conversationThemes.length > 0) {
+        contextPrompt += `\nRecurring conversation themes: ${userContext.conversationThemes.join(", ")}
+- Show continuity and remember their ongoing challenges
+- Reference previous discussions appropriately`;
+      }
+    }
+
     const systemPrompt = `You are MindfulChat, an empathetic AI companion focused on mental health support. Your responses should be:
 
 1. Warm, compassionate, and non-judgmental
 2. Supportive without being overly clinical
 3. Focused on validation and gentle guidance
 4. Encouraging self-care and professional help when needed
+5. Personalized based on the user's history and patterns
 
 Guidelines:
 - Always validate the user's feelings
 - Use gentle, caring language with occasional emojis (💙, 🌱, ✨)
-- Offer practical coping strategies
-- Suggest breathing exercises, journaling, or mindfulness when appropriate
+- Offer practical coping strategies tailored to their mood patterns
+- Suggest exercises based on their energy levels and anxiety state
+- Reference their progress and completed exercises when relevant
 - If you detect crisis language, gently encourage professional help
 - Keep responses conversational but supportive
 - Ask follow-up questions to show engagement
+- Adapt your tone and suggestions based on their recent mood trends
+
+${contextPrompt}
 
 Analyze the user's message for:
 - Sentiment (positive/neutral/negative)
 - Stress indicators (keywords like "overwhelmed", "anxious", "can't sleep", "panic", etc.)
-- Suggested exercise categories (breathing, journaling, mindfulness, movement)
+- Suggested exercise categories (breathing, journaling, mindfulness, movement) - tailor to their energy/anxiety levels
 - Whether immediate professional intervention might be needed
 
-Respond with empathy and care while providing gentle guidance.`;
+Respond with empathy and care while providing gentle guidance tailored to their specific situation.`;
 
     const messages = [
       { role: "system" as const, content: systemPrompt },
