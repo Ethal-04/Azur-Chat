@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom color palette for peaceful blue theme */
+  --calm-50: hsl(214, 100%, 97%);
+  --calm-100: hsl(214, 95%, 93%);
+  --calm-200: hsl(213, 97%, 87%);
+  --calm-300: hsl(212, 96%, 78%);
+  --calm-400: hsl(213, 94%, 68%);
+  --calm-500: hsl(217, 91%, 60%);
+  --calm-600: hsl(221, 83%, 53%);
+  --calm-700: hsl(224, 76%, 48%);
+  --calm-800: hsl(226, 71%, 40%);
+  --calm-900: hsl(224, 64%, 33%);
+  
+  --nature-50: hsl(197, 100%, 96%);
+  --nature-100: hsl(196, 94%, 90%);
+  --nature-200: hsl(197, 95%, 81%);
+  --nature-300: hsl(196, 94%, 67%);
+  --nature-400: hsl(197, 92%, 52%);
+  --nature-500: hsl(199, 89%, 48%);
+  --nature-600: hsl(200, 98%, 39%);
+  --nature-700: hsl(201, 96%, 32%);
+  --nature-800: hsl(201, 90%, 27%);
+  --nature-900: hsl(202, 80%, 24%);
+  
+  --warm-50: hsl(204, 100%, 97%);
+  --warm-100: hsl(204, 94%, 94%);
+  --warm-200: hsl(201, 94%, 86%);
+  --warm-300: hsl(199, 95%, 74%);
+  --warm-400: hsl(198, 93%, 60%);
+  --warm-500: hsl(200, 98%, 48%);
+  --warm-600: hsl(201, 96%, 40%);
+  --warm-700: hsl(201, 90%, 32%);
+  --warm-800: hsl(201, 83%, 25%);
+  --warm-900: hsl(202, 76%, 20%);
+  
+  --neutral-50: hsl(210, 20%, 98%);
+  --neutral-100: hsl(210, 20%, 95%);
+  --neutral-200: hsl(210, 20%, 88%);
+  --neutral-300: hsl(210, 20%, 78%);
+  --neutral-400: hsl(210, 20%, 63%);
+  --neutral-500: hsl(210, 20%, 48%);
+  --neutral-600: hsl(210, 20%, 38%);
+  --neutral-700: hsl(210, 20%, 28%);
+  --neutral-800: hsl(210, 20%, 18%);
+  --neutral-900: hsl(210, 20%, 12%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom utility classes for the mindful theme */
+@layer utilities {
+  .bg-calm-50 { background-color: var(--calm-50); }
+  .bg-calm-100 { background-color: var(--calm-100); }
+  .bg-calm-200 { background-color: var(--calm-200); }
+  .bg-calm-300 { background-color: var(--calm-300); }
+  .bg-calm-400 { background-color: var(--calm-400); }
+  .bg-calm-500 { background-color: var(--calm-500); }
+  .bg-calm-600 { background-color: var(--calm-600); }
+  .bg-calm-700 { background-color: var(--calm-700); }
+  .bg-calm-800 { background-color: var(--calm-800); }
+  .bg-calm-900 { background-color: var(--calm-900); }
+  
+  .text-calm-50 { color: var(--calm-50); }
+  .text-calm-100 { color: var(--calm-100); }
+  .text-calm-200 { color: var(--calm-200); }
+  .text-calm-300 { color: var(--calm-300); }
+  .text-calm-400 { color: var(--calm-400); }
+  .text-calm-500 { color: var(--calm-500); }
+  .text-calm-600 { color: var(--calm-600); }
+  .text-calm-700 { color: var(--calm-700); }
+  .text-calm-800 { color: var(--calm-800); }
+  .text-calm-900 { color: var(--calm-900); }
+  
+  .border-calm-200 { border-color: var(--calm-200); }
+  .border-calm-300 { border-color: var(--calm-300); }
+  
+  .bg-nature-50 { background-color: var(--nature-50); }
+  .bg-nature-100 { background-color: var(--nature-100); }
+  .bg-nature-200 { background-color: var(--nature-200); }
+  .bg-nature-300 { background-color: var(--nature-300); }
+  .bg-nature-400 { background-color: var(--nature-400); }
+  .bg-nature-500 { background-color: var(--nature-500); }
+  .bg-nature-600 { background-color: var(--nature-600); }
+  .bg-nature-700 { background-color: var(--nature-700); }
+  .bg-nature-800 { background-color: var(--nature-800); }
+  .bg-nature-900 { background-color: var(--nature-900); }
+  
+  .text-nature-50 { color: var(--nature-50); }
+  .text-nature-100 { color: var(--nature-100); }
+  .text-nature-200 { color: var(--nature-200); }
+  .text-nature-300 { color: var(--nature-300); }
+  .text-nature-400 { color: var(--nature-400); }
+  .text-nature-500 { color: var(--nature-500); }
+  .text-nature-600 { color: var(--nature-600); }
+  .text-nature-700 { color: var(--nature-700); }
+  .text-nature-800 { color: var(--nature-800); }
+  .text-nature-900 { color: var(--nature-900); }
+  
+  .border-nature-200 { border-color: var(--nature-200); }
+  .border-nature-300 { border-color: var(--nature-300); }
+  
+  .bg-warm-50 { background-color: var(--warm-50); }
+  .bg-warm-100 { background-color: var(--warm-100); }
+  .bg-warm-200 { background-color: var(--warm-200); }
+  .bg-warm-300 { background-color: var(--warm-300); }
+  .bg-warm-400 { background-color: var(--warm-400); }
+  .bg-warm-500 { background-color: var(--warm-500); }
+  .bg-warm-600 { background-color: var(--warm-600); }
+  .bg-warm-700 { color: var(--warm-700); }
+  .bg-warm-800 { background-color: var(--warm-800); }
+  .bg-warm-900 { background-color: var(--warm-900); }
+  
+  .text-warm-50 { color: var(--warm-50); }
+  .text-warm-100 { color: var(--warm-100); }
+  .text-warm-200 { color: var(--warm-200); }
+  .text-warm-300 { color: var(--warm-300); }
+  .text-warm-400 { color: var(--warm-400); }
+  .text-warm-500 { color: var(--warm-500); }
+  .text-warm-600 { color: var(--warm-600); }
+  .text-warm-700 { color: var(--warm-700); }
+  .text-warm-800 { color: var(--warm-800); }
+  .text-warm-900 { color: var(--warm-900); }
+  
+  .border-warm-200 { border-color: var(--warm-200); }
+  .border-warm-300 { border-color: var(--warm-300); }
+  
+  .bg-neutral-50 { background-color: var(--neutral-50); }
+  .bg-neutral-100 { background-color: var(--neutral-100); }
+  .bg-neutral-200 { background-color: var(--neutral-200); }
+  .bg-neutral-300 { background-color: var(--neutral-300); }
+  .bg-neutral-400 { background-color: var(--neutral-400); }
+  .bg-neutral-500 { background-color: var(--neutral-500); }
+  .bg-neutral-600 { background-color: var(--neutral-600); }
+  .bg-neutral-700 { background-color: var(--neutral-700); }
+  .bg-neutral-800 { background-color: var(--neutral-800); }
+  .bg-neutral-900 { background-color: var(--neutral-900); }
+  
+  .text-neutral-50 { color: var(--neutral-50); }
+  .text-neutral-100 { color: var(--neutral-100); }
+  .text-neutral-200 { color: var(--neutral-200); }
+  .text-neutral-300 { color: var(--neutral-300); }
+  .text-neutral-400 { color: var(--neutral-400); }
+  .text-neutral-500 { color: var(--neutral-500); }
+  .text-neutral-600 { color: var(--neutral-600); }
+  .text-neutral-700 { color: var(--neutral-700); }
+  .text-neutral-800 { color: var(--neutral-800); }
+  .text-neutral-900 { color: var(--neutral-900); }
+  
+  .border-neutral-100 { border-color: var(--neutral-100); }
+  .border-neutral-200 { border-color: var(--neutral-200); }
+  .border-neutral-300 { border-color: var(--neutral-300); }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s infinite;
+}
+
+.animate-breathing {
+  animation: breathing 4s ease-in-out infinite;
+}
