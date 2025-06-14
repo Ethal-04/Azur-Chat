@@ -81,8 +81,12 @@ export const moodEntries = pgTable("mood_entries", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
   mood: varchar("mood", { enum: ["great", "good", "okay", "tough", "crisis"] }).notNull(),
+  moodScore: integer("mood_score").notNull().default(5), // 1-10 scale
+  energy: integer("energy").notNull().default(5), // 1-10 scale
+  anxiety: integer("anxiety").notNull().default(5), // 1-10 scale
   notes: text("notes"),
   timestamp: timestamp("timestamp").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 // Relations

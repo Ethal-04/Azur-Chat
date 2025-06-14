@@ -99,14 +99,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const recentExercises = await storage.getUserRecentExerciseCompletions(userId, 10);
       const conversationThemes = await storage.getUserConversationThemes(userId);
 
+      // Convert mood string to numeric for AI analysis
+      const moodToNumber = (mood: string): number => {
+        switch (mood) {
+          case 'great': return 9;
+          case 'good': return 7;
+          case 'okay': return 5;
+          case 'tough': return 3;
+          case 'crisis': return 1;
+          default: return 5;
+        }
+      };
+
       const userContext = {
         recentMoodEntries: recentMoodEntries.map(entry => ({
-          mood: entry.mood,
-          energy: entry.energy,
-          anxiety: entry.anxiety,
-          timestamp: entry.createdAt.toISOString()
+          mood: entry.moodScore || moodToNumber(entry.mood),
+          energy: entry.energy || 5,
+          anxiety: entry.anxiety || 5,
+          timestamp: (entry.createdAt || entry.timestamp || new Date()).toISOString()
         })),
-        completedExercises: recentExercises.map(comp => comp.exerciseTitle || 'exercise'),
+        completedExercises: recentExercises.map((comp: any) => comp.exerciseTitle || 'exercise'),
         conversationThemes: conversationThemes
       };
 

@@ -159,6 +159,60 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(moodEntries.timestamp))
       .limit(limit);
   }
+
+  // Enhanced AI context methods
+  async getUserRecentExerciseCompletions(userId: string, limit = 10): Promise<Array<ExerciseCompletion & { exerciseTitle?: string }>> {
+    const results = await db
+      .select({
+        id: exerciseCompletions.id,
+        userId: exerciseCompletions.userId,
+        exerciseId: exerciseCompletions.exerciseId,
+        completedAt: exerciseCompletions.completedAt,
+        rating: exerciseCompletions.rating,
+        exerciseTitle: exercises.title,
+      })
+      .from(exerciseCompletions)
+      .leftJoin(exercises, eq(exerciseCompletions.exerciseId, exercises.id))
+      .where(eq(exerciseCompletions.userId, userId))
+      .orderBy(desc(exerciseCompletions.completedAt))
+      .limit(limit);
+
+    return results as Array<ExerciseCompletion & { exerciseTitle?: string }>;
+  }
+
+  async getUserConversationThemes(userId: string): Promise<string[]> {
+    const recentMessages = await db
+      .select({
+        content: messages.content,
+        stressIndicators: messages.stressIndicators,
+      })
+      .from(messages)
+      .leftJoin(conversations, eq(messages.conversationId, conversations.id))
+      .where(and(
+        eq(conversations.userId, userId),
+        eq(messages.role, "user")
+      ))
+      .orderBy(desc(messages.timestamp))
+      .limit(20);
+
+    // Extract themes from stress indicators and message content
+    const themes = new Set<string>();
+    
+    recentMessages.forEach(msg => {
+      if (msg.stressIndicators && Array.isArray(msg.stressIndicators)) {
+        msg.stressIndicators.forEach(indicator => themes.add(indicator));
+      }
+      
+      // Simple keyword extraction for common mental health themes
+      const content = msg.content?.toLowerCase() || '';
+      const keywords = ['anxiety', 'stress', 'work', 'family', 'sleep', 'depression', 'overwhelmed', 'tired', 'worried'];
+      keywords.forEach(keyword => {
+        if (content.includes(keyword)) themes.add(keyword);
+      });
+    });
+
+    return Array.from(themes).slice(0, 5); // Return top 5 themes
+  }
 }
 
 export const storage = new DatabaseStorage();
